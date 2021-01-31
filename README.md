@@ -1,10 +1,22 @@
 # life-calendar
 
-This is a [Life Calendar][life-weeks] generator.
+`life-calendar` is a [Life Calendar][life-weeks] generator written in python.
 
-To generate one--as there's no required lib other than python3--all you need to do is `make run bdate=YYYY-MM-DD` with your own birthday.
+Depends only on standard Python libraries therefore works with Python3 (haven't tried Python2 nor PyPy).
 
-I, myself, made a line of cronjob to run this file every hour,
+# How to run
+
+Just type `make run bdate=YYYY-MM-DD` with your own birthday.
+
+# Example
+
+Using `2001-01-01` as `bdate`, 
+
+![example-2001-01-01](img/example-2001-01-01.png)
+
+---
+
+(small note) I, myself, made a line of cronjob to run this file every hour,
 
 ```bash
 0 * * * * cd /Users/damiann/Developer/life-calendar && make run bdate=YYYY-MM-DD

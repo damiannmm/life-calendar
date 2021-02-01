@@ -19,7 +19,7 @@ Using `2001-01-01` as `bdate`,
 (small note) I, myself, made a line of cronjob to run this file every hour,
 
 ```bash
-0 * * * * cd /Users/damiann/Developer/life-calendar && make run bdate=YYYY-MM-DD
+0 * * * * cd /Users/damiann/Developer/life-calendar && make run target=~/Desktop/life-calendar.txt bdate=YYYY-MM-DD
 ```
 
 to keep it updated and remind myself every hour I'm being not productive (neither to myself nor others).

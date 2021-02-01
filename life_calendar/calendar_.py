@@ -1,22 +1,22 @@
-from datetime import date, datetime, timedelta
-from textwrap import dedent
+from datetime import date, datetime
 
 from life_calendar import constants
 
 
-def get_header(weeks=constants.WEEKS_OF_YEAR, years=constants.YEARS_OF_LIFE):
+def get_header(weeks=constants.WEEKS_OF_YEAR):
     space = constants.SPACE
 
-    lweek = len(str(weeks - 1))
+    lweek = len(str(weeks))
 
     header = space * weeks * lweek
 
     for idx in range(weeks):
-        stop = idx * lweek
-
         val = idx + 1
         sval = str(val)
         lval = len(sval)
+
+        stop = idx * lweek
+
         if val == 1 or val % 5 == 0:
             header = header[:stop] + sval + header[stop + lval:]
 
@@ -30,14 +30,15 @@ def count_days(birthdate_str):
     return (today - birthdate).days
 
 
-def get_matrix(days, weeks=constants.WEEKS_OF_YEAR, years=constants.YEARS_OF_LIFE):
+def get_matrix(days, weeks=constants.WEEKS_OF_YEAR,
+               years=constants.YEARS_OF_LIFE):
     right_space = constants.SPACE
 
     matrix = []
     cells = [constants.UNDER for idx in range(weeks * years)]
 
     axes = days // constants.DAYS_OF_WEEK
-    axes -= axes // weeks // constants.DAYS_OF_WEEK  # handling weeks offset  
+    axes -= axes // weeks // constants.DAYS_OF_WEEK  # handling weeks offset
     slashes = days % constants.DAYS_OF_WEEK
     # unders
 
@@ -49,8 +50,10 @@ def get_matrix(days, weeks=constants.WEEKS_OF_YEAR, years=constants.YEARS_OF_LIF
 
     for year in range(years):
         row = ''
+
         for week in range(weeks):
             row += cells[week + year * weeks] + right_space
+
         matrix.append(row)
 
     return matrix

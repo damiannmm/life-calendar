@@ -35,10 +35,10 @@ def get_matrix(days, weeks=constants.WEEKS_OF_YEAR,
     right_space = constants.SPACE
 
     matrix = []
-    cells = [constants.UNDER for idx in range(weeks * years)]
+    cells = [constants.UNDER for idx in range(constants.WEEKS_OF_YEAR * years)]
 
     axes = days // constants.DAYS_OF_WEEK
-    axes -= axes // weeks // constants.DAYS_OF_WEEK  # handling weeks offset
+    axes -= axes // (weeks * constants.DAYS_OF_WEEK)  # handling weeks offset
     slashes = days % constants.DAYS_OF_WEEK
     # unders
 
@@ -48,7 +48,7 @@ def get_matrix(days, weeks=constants.WEEKS_OF_YEAR,
     if slashes:
         cells[axes] = constants.SLASH
 
-    for year in range(years):
+    for year in range(years * constants.WEEKS_OF_YEAR // weeks):
         row = ''
 
         for week in range(weeks):
@@ -59,7 +59,8 @@ def get_matrix(days, weeks=constants.WEEKS_OF_YEAR,
     return matrix
 
 
-def add_indent(header, matrix, years=constants.YEARS_OF_LIFE):
+def add_indent(header, matrix, weeks=constants.WEEKS_OF_YEAR,
+               years=constants.YEARS_OF_LIFE):
     space = constants.SPACE
     left_space = constants.SPACE
     right_space = constants.SPACE
@@ -69,13 +70,17 @@ def add_indent(header, matrix, years=constants.YEARS_OF_LIFE):
 
     calendar = [eindent + header]
 
-    for idx in range(years):
-        sval = str(idx)
+    for idx in range(years * constants.WEEKS_OF_YEAR // weeks):
+        val = idx * weeks / constants.WEEKS_OF_YEAR
+        ival = int(val)
+        sval = str(ival)
         lval = len(sval)
+
+        ival_1 = int(val - 1 * weeks / constants.WEEKS_OF_YEAR)
 
         indent = eindent
 
-        if idx % 5 == 0:
+        if idx == 0 or (ival % 5 == 0 and ival_1 % 5 != 0):
             indent = left_space + space * (lyear - lval) + sval + right_space
 
         calendar.append(indent + matrix[idx])
@@ -83,18 +88,21 @@ def add_indent(header, matrix, years=constants.YEARS_OF_LIFE):
     return calendar
 
 
-def main(birthdate, target):
-    header = get_header()
+def main(birthdate, target, weeks, years):
+    header = get_header(weeks)
     days = count_days(birthdate)
-    matrix = get_matrix(days)
-    calendar = add_indent(header, matrix)
+    matrix = get_matrix(days, weeks, years)
+    calendar = add_indent(header, matrix, weeks, years)
 
-    sresult = constants.OPEN_SINGLESPACE + constants.NEWLINE
+    open_line = constants.OPEN_SINGLESPACE + constants.NEWLINE
+    close_line = constants.CLOSE_SINGLESPACE + constants.NEWLINE
+
+    sresult = ''
 
     for row in calendar:
         sresult += row + constants.NEWLINE
 
-    sresult += constants.CLOSE_SINGLESPACE
+    sresult = open_line + sresult + close_line
 
     with open(target, 'w') as file:
         file.write(sresult)

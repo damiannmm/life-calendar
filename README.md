@@ -16,19 +16,11 @@ Using `2001-01-01` as `bdate`,
 
 ---
 
-(small note) I, myself, made a line of cronjob to run this file every hour,
+(small note) I, myself, made a line of cronjob to run this file every hour, to keep it updated and remind myself every hour I'm being not productive (neither to myself nor others).
 
 ```bash
-0 * * * * cd /Users/damiann/Developer/life-calendar && make run target=~/Desktop/life-calendar.txt bdate=YYYY-MM-DD
+0 * * * * cd ~/Developer/life-calendar && make run target=~/Desktop/life-calendar.txt bdate=YYYY-MM-DD
 ```
-
-to keep it updated and remind myself every hour I'm being not productive (neither to myself nor others).
-
----
-
-TODO:
-
-- handle `weeks` and `years` more generally
 
 
 [blog-life-weeks]: https://waitbutwhy.com/2014/05/life-weeks.html

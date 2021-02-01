@@ -6,7 +6,6 @@ from life_calendar import constants
 
 def get_header(weeks=constants.WEEKS_OF_YEAR, years=constants.YEARS_OF_LIFE):
     space = constants.SPACE
-    right_space = constants.SPACE
 
     lweek = len(str(weeks - 1))
 
@@ -18,7 +17,7 @@ def get_header(weeks=constants.WEEKS_OF_YEAR, years=constants.YEARS_OF_LIFE):
         val = idx + 1
         sval = str(val)
         lval = len(sval)
-        if val == 1 or (val % 5 == 0 and val > 0):
+        if val == 1 or val % 5 == 0:
             header = header[:stop] + sval + header[stop + lval:]
 
     return header
@@ -55,6 +54,7 @@ def get_matrix(days, weeks=constants.WEEKS_OF_YEAR, years=constants.YEARS_OF_LIF
         matrix.append(row)
 
     return matrix
+
 
 def add_indent(header, matrix, years=constants.YEARS_OF_LIFE):
     space = constants.SPACE
